@@ -1,4 +1,4 @@
-from state import State
+from lib.state import State
 
 class Game:
     def __init__(self):
