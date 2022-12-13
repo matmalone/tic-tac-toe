@@ -17,16 +17,17 @@ class Game:
 
     def prompt(self):
         s = input(f"Enter player {self.activePlayer}'s move in xy format: ")
-        xy = list(s)
-        x = int(xy[0])
-        y = int(xy[1])
+        x,y = list(s)
 
-        return (x,y)
+        # bounds checking
+        if (not (x >= "0" and x <= "2")): return False
+        if (not (y >= "0" and y <= "2")): return False
 
+        # convert from characters to integers
+        x = int(x)
+        y = int(y)
+        return (x, y)
 
-print("Welcome to tic-tac-toe")
-
-Game().run()
 
 # state = State()
 # print(state)
