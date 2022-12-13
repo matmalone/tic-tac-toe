@@ -37,8 +37,7 @@ class State:
         if (np.array_equal(np.diagonal(self.board), p2)): return 2
 
         # check for a draw
-        # if (np.size(np.where(self.board == 0)) == 0): return -1
-        if (np.where(self.board == 0)[0].size == 0): return -1
+        if (self.moves >= 9): return -1
 
         return 0
         
