@@ -25,10 +25,6 @@ class State:
         elif (-1 == winner): print("Draw")
 
     def getWinner(self):
-        # print(self.board[:,0])
-        # print(self.board[0,:])
-        # print(np.diagonal(self.board))
-    
         # check player 1
         p1 = [1, 1, 1]
         if (np.array_equal(self.board[:,0], p1)): return 1
