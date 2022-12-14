@@ -50,3 +50,5 @@ class State:
 
         return 0
         
+    def getFree(self):
+        return np.where(self.board == 0)

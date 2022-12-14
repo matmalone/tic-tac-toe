@@ -1,5 +1,5 @@
 from lib.game import Game
 
-print("Welcome to tic-tac-toe")
+print("Welcome to tic-tac-toe\n")
 
-Game().run()
+Game('prompt', 'random').run()

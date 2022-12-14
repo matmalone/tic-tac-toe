@@ -1,14 +1,17 @@
 from lib.state import State
+import random
 
 class Game:
-    def __init__(self):
+    def __init__(self, p1Method, p2Method):
         self.state = State()
         self.activePlayer = 1
+        self.p1Method = p1Method
+        self.p2Method = p2Method
 
     def run(self):
         while True:
             print(self.state.render())
-            move = self.prompt()
+            move = self.getMove()
             self.state.move(self.activePlayer, move[0], move[1])
 
             # check to see if anyone won
@@ -27,6 +30,12 @@ class Game:
         print(self.state.render())
         return winner
 
+    def getMove(self):
+        if self.activePlayer == 1: method = self.p1Method
+        else: method = self.p2Method
+        func = getattr(self, method)
+        return func()
+
     def prompt(self):
         s = input(f"Enter player {self.activePlayer}'s move in xy format: ")
         x,y = list(s)
@@ -39,6 +48,14 @@ class Game:
         x = int(x)
         y = int(y)
         return (x, y)
+
+    def random(self):
+        # get the open cells
+        free = self.state.getFree()
+        # pick one at random then return it
+        idx = random.randint(0, len(free) - 1)
+        pick = (free[0][idx], free[1][idx])
+        return pick
 
 
 # state = State()
