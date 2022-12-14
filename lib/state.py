@@ -5,24 +5,24 @@ class State:
         self.board = np.zeros((3, 3), dtype=np.int8)
         self.moves = 0
 
-    def print(self):
+    def render(self):
         # print(self.board)
+        s = ""
         for y in range(2, -1, -1):
-            print("[ ", end="")
+            s += "[ "
             for x in range(0, 3):
-                print(f"{self.board[x, y]} ", end="")
-            print("]")
+                val = self.board[x, y]
+                if val == 0: symbol = " "
+                else: symbol = val
+                s += f"{symbol} "
+            s += "]\n"
 
-
-        print(f"Moves: {self.moves}")
-        print()
+        s += f"Moves: {self.moves}\n"
+        return s
 
     def move(self, player, x, y):
         self.board[x, y] = player
         self.moves += 1
-        winner = self.getWinner()
-        if (winner > 0): print(f"!!!!!!! Player {winner} wins !!!!!!!")
-        elif (-1 == winner): print("Draw")
 
     def getWinner(self):
         # check player 1

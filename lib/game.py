@@ -7,13 +7,25 @@ class Game:
 
     def run(self):
         while True:
-            self.state.print()
+            print(self.state.render())
             move = self.prompt()
             self.state.move(self.activePlayer, move[0], move[1])
+
+            # check to see if anyone won
+            winner = self.state.getWinner()
+            if (winner > 0): 
+                print(f"!!!!!!! Player {winner} wins !!!!!!!")
+                break
+            elif (-1 == winner): 
+                print("Draw")
+                break
 
             # alternate players
             self.activePlayer %= 2
             self.activePlayer += 1
+        # final display of the board
+        print(self.state.render())
+        return winner
 
     def prompt(self):
         s = input(f"Enter player {self.activePlayer}'s move in xy format: ")
