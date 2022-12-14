@@ -30,6 +30,9 @@ class State:
         if (np.array_equal(self.board[:,0], p1)): return 1
         if (np.array_equal(self.board[:,1], p1)): return 1
         if (np.array_equal(self.board[:,2], p1)): return 1
+        if (np.array_equal(self.board[0,:], p1)): return 1
+        if (np.array_equal(self.board[1,:], p1)): return 1
+        if (np.array_equal(self.board[2,:], p1)): return 1
         if (np.array_equal(np.diagonal(self.board), p1)): return 1
 
         # check player 2
@@ -37,6 +40,9 @@ class State:
         if (np.array_equal(self.board[:,0], p2)): return 2
         if (np.array_equal(self.board[:,1], p2)): return 2
         if (np.array_equal(self.board[:,2], p2)): return 2
+        if (np.array_equal(self.board[0,:], p2)): return 2
+        if (np.array_equal(self.board[1,:], p2)): return 2
+        if (np.array_equal(self.board[2,:], p2)): return 2
         if (np.array_equal(np.diagonal(self.board), p2)): return 2
 
         # check for a draw
