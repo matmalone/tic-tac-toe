@@ -53,7 +53,7 @@ class Game:
         # get the open cells
         free = self.state.getFree()
         # pick one at random then return it
-        idx = random.randint(0, len(free) - 1)
+        idx = random.randint(0, len(free[0]) - 1)
         pick = (free[0][idx], free[1][idx])
         return pick
 
