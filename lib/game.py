@@ -2,32 +2,48 @@ from lib.state import State
 import random
 
 class Game:
-    def __init__(self, p1Method, p2Method):
-        self.state = State()
-        self.activePlayer = 1
+    def __init__(self, p1Method, p2Method, hideGameOutput=False):
         self.p1Method = p1Method
         self.p2Method = p2Method
+        self.hideGameOutput = hideGameOutput
 
-    def run(self):
+    def runLoop(self, cycles):
+        p1Wins = p2Wins = draws = 0
+        for i in range(cycles):
+            winner = self.runGame()
+            if winner == 1: p1Wins += 1
+            elif winner == 2: p2Wins += 1
+            else: draws += 1
+        print(f"Player 1 ({self.p1Method}) wins: {p1Wins}; ", 100 * p1Wins / cycles, "%")
+        print(f"Player 2 ({self.p2Method}) wins: {p2Wins}; ", 100 * p2Wins / cycles, "%")
+        print("Draws: ", draws, "; ", 100 * draws / cycles, "%")
+
+
+
+    def runGame(self):
+        self.state = State()
+        # choose a starting player at random
+        self.activePlayer = random.randint(1, 2)
+
         while True:
-            print(self.state.render())
+            self.print(self.state.render())
             move = self.getMove()
             self.state.move(self.activePlayer, move[0], move[1])
 
             # check to see if anyone won
             winner = self.state.getWinner()
             if (winner > 0): 
-                print(f"!!!!!!! Player {winner} wins !!!!!!!")
+                self.print(f"!!!!!!! Player {winner} wins !!!!!!!")
                 break
             elif (-1 == winner): 
-                print("Draw")
+                self.print("???????? Draw ????????")
                 break
 
             # alternate players
             self.activePlayer %= 2
             self.activePlayer += 1
         # final display of the board
-        print(self.state.render())
+        self.print(self.state.render())
         return winner
 
     def getMove(self):
@@ -56,6 +72,12 @@ class Game:
         idx = random.randint(0, len(free[0]) - 1)
         pick = (free[0][idx], free[1][idx])
         return pick
+
+    def print(self, s):
+        if self.hideGameOutput == False:
+            print(s)
+
+
 
 
 # state = State()
