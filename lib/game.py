@@ -64,16 +64,11 @@ class Game:
         return func()
 
     def prompt(self):
-        s = input(f"Enter player {self.activePlayer}'s move in xy format: ")
-        x,y = list(s)
+        s = input(f"Enter player {self.activePlayer}'s move in keypad format: ")
 
-        # bounds checking
-        if (not (x >= "0" and x <= "2")): return False
-        if (not (y >= "0" and y <= "2")): return False
+        # translate the keypad string value to a x,y tuple
+        x, y = self.keyToXy(s)
 
-        # convert from characters to integers
-        x = int(x)
-        y = int(y)
         return (x, y)
 
     def random(self):
@@ -83,6 +78,30 @@ class Game:
         idx = random.randint(0, len(free[0]) - 1)
         pick = (free[0][idx], free[1][idx])
         return pick
+
+    def keyToXy(self, key):
+        key = int(key)
+        match key:
+            case 1:
+                return (0, 0)
+            case 2:
+                return (1, 0)
+            case 3:
+                return (2, 0)
+            case 4:
+                return (1, 0)
+            case 5:
+                return (1, 1)
+            case 6:
+                return (1, 2)
+            case 7:
+                return (2, 0)
+            case 8:
+                return (2, 1)
+            case 9:
+                return (2, 2)
+        return False
+        
 
     def print(self, s):
         if self.hideGameOutput == False:
