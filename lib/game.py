@@ -133,7 +133,19 @@ class Game:
             case 9:
                 return (2, 2)
         return False
-        
+
+    def xyToKey(self, xy):
+        if xy == (0,0): return 1
+        if xy == (1,0): return 2
+        if xy == (2,0): return 3
+        if xy == (0,1): return 4
+        if xy == (1,1): return 5
+        if xy == (2,1): return 6
+        if xy == (0,2): return 7
+        if xy == (1,2): return 8
+        if xy == (2,2): return 9
+        return False
+
 
     def print(self, s):
         if self.hideGameOutput == False:
