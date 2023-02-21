@@ -1,11 +1,15 @@
 from lib.state import State
 import random
+import copy
 
 class Game:
-    def __init__(self, p1Method, p2Method, hideGameOutput=False):
+    def __init__(self, p1Method, p2Method, hideGameOutput=False, randomSeed=None):
         self.p1Method = p1Method
         self.p2Method = p2Method
         self.hideGameOutput = hideGameOutput
+        self.frames = []
+        if randomSeed:
+            random.seed(randomSeed)
 
     def runLoop(self, cycles):
         p1Wins = p2Wins = draws = 0
@@ -22,6 +26,7 @@ class Game:
 
     def runGame(self):
         self.state = State()
+        self.frames = []
         # choose a starting player at random
         self.activePlayer = random.randint(1, 2)
 
@@ -42,6 +47,10 @@ class Game:
             # alternate players
             self.activePlayer %= 2
             self.activePlayer += 1
+            
+            # record the current state's current for analysis later
+            self.frames.append(copy.copy(self.state.board))
+            
         # final display of the board
         self.print(self.state.render())
         return winner
