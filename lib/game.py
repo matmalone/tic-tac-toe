@@ -33,7 +33,9 @@ class Game:
         while True:
             self.print(self.state.render())
             move = self.getMove()
-            self.state.move(self.activePlayer, move[0], move[1])
+            success = self.state.move(self.activePlayer, move[0], move[1])
+            if not success:
+                self.print(f"??? Player {self.activePlayer} made an invalid move ???")
 
             # check to see if anyone won
             winner = self.state.getWinner()

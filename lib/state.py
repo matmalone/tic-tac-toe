@@ -4,6 +4,7 @@ class State:
     def __init__(self):
         self.board = np.zeros((3, 3), dtype=np.int8)
         self.moves = 0
+        self.disqualifiedPlayer = None
 
     def render(self):
         # print(self.board)
@@ -21,10 +22,21 @@ class State:
         return s
 
     def move(self, player, x, y):
+        if self.board[x, y] > 0:
+            # don't allow a player to stomp on another player
+            self.disqualifiedPlayer = player
+            return False
+        
         self.board[x, y] = player
         self.moves += 1
+        return True
 
     def getWinner(self):
+        # check to see if a player was disqualified
+        if self.disqualifiedPlayer:
+            # if someone was disqualified, it's the opposite player
+            return 2 - (1 % self.disqualifiedPlayer)
+        
         # check player 1
         p1 = [1, 1, 1]
         if (np.array_equal(self.board[:,0], p1)): return 1
