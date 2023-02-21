@@ -1,33 +1,26 @@
-import numpy as np
-
 class State:
     def __init__(self):
-        self.board = np.zeros((3, 3), dtype=np.int8)
+        self.board = [0] * 10
+        self.board[0] = -1
         self.moves = 0
         self.disqualifiedPlayer = None
 
     def render(self):
         # print(self.board)
         s = ""
-        for y in range(2, -1, -1):
-            s += "[ "
-            for x in range(0, 3):
-                val = self.board[x, y]
-                if val == 0: symbol = " "
-                else: symbol = val
-                s += f"{symbol} "
-            s += "]\n"
-
+        s += f"[ {self.board[7]} {self.board[8]} {self.board[9]} ]\n"
+        s += f"[ {self.board[4]} {self.board[5]} {self.board[6]} ]\n"
+        s += f"[ {self.board[1]} {self.board[2]} {self.board[3]} ]\n"
         s += f"Moves: {self.moves}\n"
         return s
 
-    def move(self, player, x, y):
-        if self.board[x, y] > 0:
+    def move(self, player, pos):
+        if self.board[pos] != 0:
             # don't allow a player to stomp on another player
             self.disqualifiedPlayer = player
             return False
         
-        self.board[x, y] = player
+        self.board[pos] = player
         self.moves += 1
         return True
 
@@ -38,29 +31,32 @@ class State:
             return 2 - (1 % self.disqualifiedPlayer)
         
         # check player 1
-        p1 = [1, 1, 1]
-        if (np.array_equal(self.board[:,0], p1)): return 1
-        if (np.array_equal(self.board[:,1], p1)): return 1
-        if (np.array_equal(self.board[:,2], p1)): return 1
-        if (np.array_equal(self.board[0,:], p1)): return 1
-        if (np.array_equal(self.board[1,:], p1)): return 1
-        if (np.array_equal(self.board[2,:], p1)): return 1
-        if (np.array_equal(np.diagonal(self.board), p1)): return 1
-
+        if self.board[7] == 1 and self.board[8] == 1 and self.board[9] == 1: return 1
+        if self.board[4] == 1 and self.board[5] == 1 and self.board[6] == 1: return 1
+        if self.board[1] == 1 and self.board[2] == 1 and self.board[3] == 1: return 1
+        if self.board[1] == 1 and self.board[4] == 1 and self.board[7] == 1: return 1
+        if self.board[2] == 1 and self.board[5] == 1 and self.board[8] == 1: return 1
+        if self.board[3] == 1 and self.board[6] == 1 and self.board[9] == 1: return 1
+        if self.board[1] == 1 and self.board[5] == 1 and self.board[9] == 1: return 1
+        if self.board[3] == 1 and self.board[5] == 1 and self.board[7] == 1: return 1
+        
         # check player 2
-        p2 = [2, 2, 2]
-        if (np.array_equal(self.board[:,0], p2)): return 2
-        if (np.array_equal(self.board[:,1], p2)): return 2
-        if (np.array_equal(self.board[:,2], p2)): return 2
-        if (np.array_equal(self.board[0,:], p2)): return 2
-        if (np.array_equal(self.board[1,:], p2)): return 2
-        if (np.array_equal(self.board[2,:], p2)): return 2
-        if (np.array_equal(np.diagonal(self.board), p2)): return 2
-
+        if self.board[7] == 2 and self.board[8] == 2 and self.board[9] == 2: return 2
+        if self.board[4] == 2 and self.board[5] == 2 and self.board[6] == 2: return 2
+        if self.board[1] == 2 and self.board[2] == 2 and self.board[3] == 2: return 2
+        if self.board[1] == 2 and self.board[4] == 2 and self.board[7] == 2: return 2
+        if self.board[2] == 2 and self.board[5] == 2 and self.board[8] == 2: return 2
+        if self.board[3] == 2 and self.board[6] == 2 and self.board[9] == 2: return 2
+        if self.board[1] == 2 and self.board[5] == 2 and self.board[9] == 2: return 2
+        if self.board[3] == 2 and self.board[5] == 2 and self.board[7] == 2: return 2
+        
         # check for a draw
         if (self.moves >= 9): return -1
 
         return 0
         
     def getFree(self):
-        return np.where(self.board == 0)
+        return [i for i, e in enumerate(self.board) if e == 0]
+
+
+

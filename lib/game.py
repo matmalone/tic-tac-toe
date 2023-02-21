@@ -54,7 +54,8 @@ class Game:
             self.frames.append(copy.copy(self.state.board))
 
             move = self.getMove()
-            success = self.state.move(self.activePlayer, move[0], move[1])
+            # print(f"Player {self.activePlayer} moves to {move}")
+            success = self.state.move(self.activePlayer, move)
             if not success:
                 self.print(f"??? Player {self.activePlayer} made an invalid move ???")
 
@@ -98,17 +99,15 @@ class Game:
     def prompt(self):
         s = input(f"Enter player {self.activePlayer}'s move in keypad format: ")
 
-        # translate the keypad string value to a x,y tuple
-        x, y = self.keyToXy(s)
-
-        return (x, y)
+        return int(s)
 
     def random(self):
         # get the open cells
         free = self.state.getFree()
+        # print("free:", free)
         # pick one at random then return it
-        idx = random.randint(0, len(free[0]) - 1)
-        pick = (free[0][idx], free[1][idx])
+        idx = random.randint(0, len(free) - 1)
+        pick = free[idx]
         return pick
 
     def keyToXy(self, key):
