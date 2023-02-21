@@ -71,8 +71,15 @@ class Game:
     def getMove(self):
         if self.activePlayer == 1: method = self.p1Method
         else: method = self.p2Method
-        func = getattr(self, method)
-        return func()
+        
+        # if the method was a callback function, use that to call and pass a reference to the game
+        if callable(method):
+            func = method
+            return func(self)
+        else:
+            # otherwise get the object's method to call
+            func = getattr(self, method)
+            return func()
 
     def prompt(self):
         s = input(f"Enter player {self.activePlayer}'s move in keypad format: ")
