@@ -12,6 +12,12 @@ class Game:
             random.seed(randomSeed)
 
     def runLoop(self, cycles):
+        """
+        Run the game loop.
+        
+        cycles : int
+            The number of cycles to loop for.
+        """
         p1Wins = p2Wins = draws = 0
         for i in range(cycles):
             winner = self.runGame()
@@ -23,8 +29,13 @@ class Game:
         print("Draws: ", draws, "; ", 100 * draws / cycles, "%")
 
 
-
     def runGame(self):
+        """
+        Run a single game of TTT.
+
+        Returns:
+        int: Which player won the game: 1, 2, or -1 on a draw.
+        """
         self.state = State()
         self.frames = []
         # choose a starting player at random
