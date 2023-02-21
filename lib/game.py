@@ -8,6 +8,9 @@ class Game:
         self.p2Method = p2Method
         self.hideGameOutput = hideGameOutput
         self.frames = []
+        self.p1Moves = []
+        self.p2Moves = []
+        
         if randomSeed:
             random.seed(randomSeed)
 
@@ -38,15 +41,28 @@ class Game:
         """
         self.state = State()
         self.frames = []
+        self.p1Moves = []
+        self.p2Moves = []
+
         # choose a starting player at random
         self.activePlayer = random.randint(1, 2)
 
         while True:
             self.print(self.state.render())
+
+            # record the old state for analysis later
+            self.frames.append(copy.copy(self.state.board))
+
             move = self.getMove()
             success = self.state.move(self.activePlayer, move[0], move[1])
             if not success:
                 self.print(f"??? Player {self.activePlayer} made an invalid move ???")
+
+            # save the move for analysis later
+            if self.activePlayer == 1:
+                self.p1Moves.append(move)
+            else:
+                self.p2Moves.append(move)
 
             # check to see if anyone won
             winner = self.state.getWinner()
@@ -61,8 +77,6 @@ class Game:
             self.activePlayer %= 2
             self.activePlayer += 1
             
-            # record the current state's current for analysis later
-            self.frames.append(copy.copy(self.state.board))
             
         # final display of the board
         self.print(self.state.render())
