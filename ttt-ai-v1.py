@@ -18,12 +18,12 @@ NUM_EXPLORE = 5
 
 def aiMove(game):
     # print("match", match)
-    board = torch.Tensor(game.state.board).type(torch.float32)
-    board = board.reshape(1, 9).squeeze()
-    # print(board)
+    board = torch.Tensor(game.state.board[1:]).type(torch.float32)
+    # board = board.reshape(1, 9).squeeze()
+    # print("aiMove() board:", board)
     move = model(board)
-    print(move)
-    # move = move.argmax() + 1
+    # print("move:", move)
+    move = move.argmax().item()
     # print("AI moves to", move)
     
     return move
@@ -36,16 +36,18 @@ def runMatch(game, X, y):
 
     if winner == AI_PLAYER_ID:
         # record the frames as the training set
-        frames = torch.Tensor(game.frames)
-        print("frames:", frames)
+        frames = torch.Tensor(game.p1Frames)
+        # print("frames:", frames)
         # frames = frames.reshape(frames.shape[0], 9).squeeze()
         # print(f"state:\n{game.state.render()}")
         X = torch.cat((X, frames), dim=0)
 
-        moves = torch.Tensor([moves]).reshape()
-        print("moves: ", moves)
-        # y = torch.cat((y, moves), dim=0)
-        # print("y:", y)
+        moves = game.p1Moves
+        # print("list moves: ", moves)
+        movesLen = len(moves)
+        moves = torch.Tensor(moves).reshape(movesLen, 1).type(torch.int32)
+        # print("tensor moves: ", moves)
+        y = torch.cat((y, moves), dim=0)
         
     return X, y, winner
 
