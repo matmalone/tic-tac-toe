@@ -4,8 +4,9 @@ print("Welcome to tic-tac-toe\n")
 
 
 def aiMove(game):
-    return (1, 1)
+    return 5
 
 
 # Game(aiMove, 'random', hideGameOutput=False).runLoop(1)
-Game('random', 'random', True).runLoop(1000)
+Game('prompt', 'random', hideGameOutput=False).runLoop(1)
+# Game('random', 'random', hideGameOutput=True).runLoop(1000)
