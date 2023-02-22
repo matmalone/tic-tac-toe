@@ -7,7 +7,8 @@ class Game:
         self.p1Method = p1Method
         self.p2Method = p2Method
         self.hideGameOutput = hideGameOutput
-        self.frames = []
+        self.p1Frames = []
+        self.p2Frames = []
         self.p1Moves = []
         self.p2Moves = []
         
@@ -40,7 +41,8 @@ class Game:
         int: Which player won the game: 1, 2, or -1 on a draw.
         """
         self.state = State()
-        self.frames = []
+        self.p1Frames = []
+        self.p2Frames = []
         self.p1Moves = []
         self.p2Moves = []
 
@@ -51,7 +53,10 @@ class Game:
             self.print(self.state.render())
 
             # record the old state for analysis later
-            self.frames.append(copy.copy(self.state.board))
+            if self.activePlayer == 1:
+                self.p1Frames.append(copy.copy(self.state.board))
+            if self.activePlayer == 2:
+                self.p2Frames.append(copy.copy(self.state.board))
 
             move = self.getMove()
             # print(f"Player {self.activePlayer} moves to {move}")
