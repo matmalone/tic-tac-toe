@@ -15,7 +15,7 @@ class State:
         return s
 
     def move(self, player, pos):
-        if self.board[pos] != 0:
+        if pos < 1 or pos > 9 or self.board[pos] != 0:
             # don't allow a player to stomp on another player
             self.disqualifiedPlayer = player
             return False
