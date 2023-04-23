@@ -2,16 +2,15 @@
 from lib.game import Game
 from lib import play_methods
 
-p1_method = play_methods.random_move
-p2_method = play_methods.random_move
-num_cycles = 100
+seqential = play_methods.Sequential()
+
+p1_method = seqential.get_move
+p2_method = seqential.get_move
+num_cycles = 1
 hide_game_output = False
 random_seed = None
 
 print("Welcome to tic-tac-toe\n")
-
-
-
 
 # Game(aiMove, 'random', hideGameOutput=False).runLoop(1)
 Game(
