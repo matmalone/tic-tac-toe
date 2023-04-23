@@ -108,7 +108,7 @@ class Game:
 
     def random(self):
         # get the open cells
-        free = self.state.getFree()
+        free = self.state.get_valid_moves()
         # print("free:", free)
         # pick one at random then return it
         idx = random.randint(0, len(free) - 1)

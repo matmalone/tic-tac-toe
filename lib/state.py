@@ -55,7 +55,7 @@ class State:
 
         return 0
         
-    def getFree(self):
+    def get_valid_moves(self):
         return [i for i, e in enumerate(self.board) if e == 0]
 
 
