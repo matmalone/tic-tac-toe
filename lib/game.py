@@ -1,4 +1,4 @@
-from lib.state import State
+from .state import State
 import random
 import copy
 
