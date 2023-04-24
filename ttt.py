@@ -5,6 +5,7 @@ from lib import play_methods
 # seqential = play_methods.Sequential()
 
 p1_method = play_methods.prompt
+p1_method = play_methods.random_move
 p2_method = play_methods.random_move
 num_cycles = 1
 hide_game_output = False
