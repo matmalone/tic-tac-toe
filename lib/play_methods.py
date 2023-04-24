@@ -23,3 +23,8 @@ class Sequential:
     
     def reset(self):
         self.next_move = 1
+
+def prompt(game):
+    s = input(f"Enter player {game.activePlayer}'s move in keypad format: ")
+
+    return int(s)

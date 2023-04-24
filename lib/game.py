@@ -101,20 +101,6 @@ class Game:
             func = getattr(self, method)
             return func()
 
-    def prompt(self):
-        s = input(f"Enter player {self.activePlayer}'s move in keypad format: ")
-
-        return int(s)
-
-    def random(self):
-        # get the open cells
-        free = self.state.get_valid_moves()
-        # print("free:", free)
-        # pick one at random then return it
-        idx = random.randint(0, len(free) - 1)
-        pick = free[idx]
-        return pick
-
     def keyToXy(self, key):
         key = int(key)
         match key:

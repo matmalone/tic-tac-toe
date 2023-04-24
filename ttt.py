@@ -2,10 +2,10 @@
 from lib.game import Game
 from lib import play_methods
 
-seqential = play_methods.Sequential()
+# seqential = play_methods.Sequential()
 
-p1_method = seqential.get_move
-p2_method = seqential.get_move
+p1_method = play_methods.prompt
+p2_method = play_methods.random_move
 num_cycles = 1
 hide_game_output = False
 random_seed = None
